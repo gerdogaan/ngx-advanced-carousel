@@ -2,11 +2,11 @@
   "name": "ngx-advanced-carousel",
   "version": "0.3.7",
   "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14"
+    "@angular/common": "^15.2.9",
+    "@angular/core": "^15.2.9",
+    "@juggle/resize-observer": "^3.4.0"
   },
   "dependencies": {
-    "hammerjs": "^2.0.8",
-    "resize-observer-polyfill": "^1.5.1"
+    "tslib": "^2.0.0"
   }
 }

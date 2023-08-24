@@ -1,4 +1,4 @@
-import ResizeObserver from 'resize-observer-polyfill';
+import {ResizeObserver} from '@juggle/resize-observer';
 import { Observable, Subscriber } from 'rxjs';
 import { debounceTime, finalize, tap } from 'rxjs/operators';
 

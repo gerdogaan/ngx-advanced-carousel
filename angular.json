@@ -10,7 +10,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ngx-advanced-carousel/tsconfig.lib.json",
             "project": "projects/ngx-advanced-carousel/ng-package.json"
@@ -23,22 +23,10 @@
             "tsConfig": "projects/ngx-advanced-carousel/tsconfig.spec.json",
             "karmaConfig": "projects/ngx-advanced-carousel/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngx-advanced-carousel/tsconfig.lib.json",
-              "projects/ngx-advanced-carousel/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
-    }},
-  "defaultProject": "ngx-advanced-carousel",
+    }
+  },
   "cli": {
     "analytics": false
   }
