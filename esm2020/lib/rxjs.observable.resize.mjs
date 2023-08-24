@@ -1,0 +1,24 @@
+import { ResizeObserver } from '@juggle/resize-observer';
+import { Observable } from 'rxjs';
+import { debounceTime, finalize, tap } from 'rxjs/operators';
+/**
+ * An observable creator for element resize.
+ * @param elm the watch element.
+ * @param cb when resize complete, call back function.
+ * @param time resize emit time, default is 200
+ */
+export function resizeObservable(elm, cb, time = 200) {
+    let elmObserve$;
+    return new Observable((observer) => {
+        elmObserve$ = new ResizeObserver((entries, obs) => {
+            observer.next(elmObserve$);
+        });
+        elmObserve$.observe(elm);
+    }).pipe(debounceTime(time), tap(() => {
+        cb();
+    }), finalize(() => {
+        elmObserve$.unobserve(elm);
+        elmObserve$.disconnect();
+    }));
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicnhqcy5vYnNlcnZhYmxlLnJlc2l6ZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Byb2plY3RzL25neC1hZHZhbmNlZC1jYXJvdXNlbC9zcmMvbGliL3J4anMub2JzZXJ2YWJsZS5yZXNpemUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFDLGNBQWMsRUFBQyxNQUFNLHlCQUF5QixDQUFDO0FBQ3ZELE9BQU8sRUFBRSxVQUFVLEVBQWMsTUFBTSxNQUFNLENBQUM7QUFDOUMsT0FBTyxFQUFFLFlBQVksRUFBRSxRQUFRLEVBQUUsR0FBRyxFQUFFLE1BQU0sZ0JBQWdCLENBQUM7QUFFN0Q7Ozs7O0dBS0c7QUFDSCxNQUFNLFVBQVUsZ0JBQWdCLENBQzlCLEdBQWdCLEVBQ2hCLEVBQWMsRUFDZCxJQUFJLEdBQUcsR0FBRztJQUVWLElBQUksV0FBMkIsQ0FBQztJQUNoQyxPQUFPLElBQUksVUFBVSxDQUFDLENBQUMsUUFBeUIsRUFBRSxFQUFFO1FBQ2xELFdBQVcsR0FBRyxJQUFJLGNBQWMsQ0FBQyxDQUFDLE9BQU8sRUFBRSxHQUFHLEVBQUUsRUFBRTtZQUNoRCxRQUFRLENBQUMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDO1FBQzdCLENBQUMsQ0FBQyxDQUFDO1FBQ0gsV0FBVyxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsQ0FBQztJQUMzQixDQUFDLENBQUMsQ0FBQyxJQUFJLENBQ0wsWUFBWSxDQUFDLElBQUksQ0FBQyxFQUNsQixHQUFHLENBQUMsR0FBRyxFQUFFO1FBQ1AsRUFBRSxFQUFFLENBQUM7SUFDUCxDQUFDLENBQUMsRUFDRixRQUFRLENBQUMsR0FBRyxFQUFFO1FBQ1osV0FBVyxDQUFDLFNBQVMsQ0FBQyxHQUFHLENBQUMsQ0FBQztRQUMzQixXQUFXLENBQUMsVUFBVSxFQUFFLENBQUM7SUFDM0IsQ0FBQyxDQUFDLENBQ0gsQ0FBQztBQUNKLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge1Jlc2l6ZU9ic2VydmVyfSBmcm9tICdAanVnZ2xlL3Jlc2l6ZS1vYnNlcnZlcic7XG5pbXBvcnQgeyBPYnNlcnZhYmxlLCBTdWJzY3JpYmVyIH0gZnJvbSAncnhqcyc7XG5pbXBvcnQgeyBkZWJvdW5jZVRpbWUsIGZpbmFsaXplLCB0YXAgfSBmcm9tICdyeGpzL29wZXJhdG9ycyc7XG5cbi8qKlxuICogQW4gb2JzZXJ2YWJsZSBjcmVhdG9yIGZvciBlbGVtZW50IHJlc2l6ZS5cbiAqIEBwYXJhbSBlbG0gdGhlIHdhdGNoIGVsZW1lbnQuXG4gKiBAcGFyYW0gY2Igd2hlbiByZXNpemUgY29tcGxldGUsIGNhbGwgYmFjayBmdW5jdGlvbi5cbiAqIEBwYXJhbSB0aW1lIHJlc2l6ZSBlbWl0IHRpbWUsIGRlZmF1bHQgaXMgMjAwXG4gKi9cbmV4cG9ydCBmdW5jdGlvbiByZXNpemVPYnNlcnZhYmxlKFxuICBlbG06IEhUTUxFbGVtZW50LFxuICBjYjogKCkgPT4gdm9pZCxcbiAgdGltZSA9IDIwMCxcbik6IE9ic2VydmFibGU8YW55PiB7XG4gIGxldCBlbG1PYnNlcnZlJDogUmVzaXplT2JzZXJ2ZXI7XG4gIHJldHVybiBuZXcgT2JzZXJ2YWJsZSgob2JzZXJ2ZXI6IFN1YnNjcmliZXI8YW55PikgPT4ge1xuICAgIGVsbU9ic2VydmUkID0gbmV3IFJlc2l6ZU9ic2VydmVyKChlbnRyaWVzLCBvYnMpID0+IHtcbiAgICAgIG9ic2VydmVyLm5leHQoZWxtT2JzZXJ2ZSQpO1xuICAgIH0pO1xuICAgIGVsbU9ic2VydmUkLm9ic2VydmUoZWxtKTtcbiAgfSkucGlwZShcbiAgICBkZWJvdW5jZVRpbWUodGltZSksXG4gICAgdGFwKCgpID0+IHtcbiAgICAgIGNiKCk7XG4gICAgfSksXG4gICAgZmluYWxpemUoKCkgPT4ge1xuICAgICAgZWxtT2JzZXJ2ZSQudW5vYnNlcnZlKGVsbSk7XG4gICAgICBlbG1PYnNlcnZlJC5kaXNjb25uZWN0KCk7XG4gICAgfSksXG4gICk7XG59XG4iXX0=
